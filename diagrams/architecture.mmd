@@ -1,0 +1,56 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#4A90D9', 'primaryTextColor': '#fff', 'primaryBorderColor': '#2E6BA6', 'lineColor': '#5C6BC0', 'secondaryColor': '#66BB6A', 'tertiaryColor': '#FFA726'}}}%%
+
+graph TB
+    subgraph trigger["Session Start Trigger"]
+        SETTINGS["settings.json<br/>(UserPromptSubmit hook)"]
+    end
+
+    subgraph hook["Auto-Pull Pipeline"]
+        PULL["pull_knowledge.sh"]
+        PULL -->|"30 min TTL"| WIKI_API["Wiki API<br/>(Confluence / Notion)"]
+        PULL -->|"24 hr TTL"| SKILLS_REPO["Skills Repo<br/>(git pull)"]
+        PULL -->|"parse YAML"| GEN["generate_skill_routing.py"]
+    end
+
+    subgraph cache["Local Cache (~/.claude/)"]
+        WIKI_CACHE["cache/wiki/*.md<br/>(cached wiki pages)"]
+        SKILL_CACHE["cache/skills_routing.md<br/>(auto-generated)"]
+        TK["team_knowledge.md<br/>(assembled from cache)"]
+        RULES["rules/team-standards.md"]
+    end
+
+    subgraph session["Claude Code Session Context"]
+        CLAUDE["CLAUDE.md<br/>(entry point)"]
+        CLAUDE -->|"@import"| RULES_REF["Team Standards<br/>~50 lines"]
+        CLAUDE -->|"@import"| ROUTING["Skill Routing<br/>~130 lines"]
+        CLAUDE -->|"@import"| KNOWLEDGE["Team Knowledge<br/>~350 lines"]
+
+        KNOWLEDGE --> SHARED["Tier 1: Shared Standards"]
+        KNOWLEDGE --> DEPMAP["Tier 2: Dependency Map"]
+        KNOWLEDGE --> MODULE["Tier 3: Module Detail"]
+        KNOWLEDGE -.->|"on-demand<br/>(Read tool)"| REFS["Tier 4: References"]
+    end
+
+    subgraph push["Push Protocol (user-approved)"]
+        DETECT["Detect Learning"] --> CARD["Present Card"]
+        CARD --> ROUTE["Route to Page"]
+        ROUTE --> STAGE["Stage in<br/>Recent Learnings"]
+        STAGE --> PUSH_API["Push via API"]
+    end
+
+    %% Flow connections
+    SETTINGS -->|"fires before<br/>first prompt"| PULL
+    WIKI_API -->|"HTML → markdown"| WIKI_CACHE
+    SKILLS_REPO --> GEN
+    GEN --> SKILL_CACHE
+    WIKI_CACHE -->|"assemble"| TK
+    TK --> KNOWLEDGE
+    SKILL_CACHE --> ROUTING
+    RULES --> RULES_REF
+    PUSH_API -->|"update wiki +<br/>clear cache"| WIKI_API
+
+    style trigger fill:#FFFDE7,stroke:#F9A825
+    style hook fill:#F3E5F5,stroke:#6A1B9A
+    style cache fill:#FFF3E0,stroke:#E65100
+    style session fill:#E3F2FD,stroke:#1565C0
+    style push fill:#FCE4EC,stroke:#AD1457
