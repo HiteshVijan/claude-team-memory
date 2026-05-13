@@ -1,0 +1,82 @@
+# Claude Code — Global Instructions
+
+## Who I Work With
+- Name: Jane Smith
+- Role: Software Engineer, Analytics Platform team
+- Email: jane.smith@mycompany.com
+
+## How to Work
+- Check the skill routing table BEFORE every response. If the user's intent matches, auto-invoke the skill
+- Trust user's domain knowledge — verify with data/docs, not exhaustive code tracing
+- When a question has multiple interpretations, ask before searching
+- When a question needs context from multiple sources, search them ALL in parallel — never present partial results as the full answer
+- Keep responses concise
+
+## Source Attribution
+When answering from team knowledge, always tell the user where the answer came from:
+- "From your **Team Standards** page on Confluence..." (Tier 1)
+- "From the **Dependency Map** on your wiki..." (Tier 2)
+- "From the **Module: {name}** page..." (Tier 3)
+- "From the **Contacts** page..." (Tier 4)
+This builds trust that the answer is grounded in team-maintained knowledge, not guesswork.
+
+## Knowledge Push Protocol
+When you discover a new learning (standard, gotcha, convention, fix, contact), suggest pushing it to the team wiki. Present a learning card:
+
+```
+LEARNING DETECTED — review before push
+
+  Title:    <short descriptive title>
+  Category: standard | dependency | contact | troubleshooting
+  Target:   <page name> on Confluence
+  Body:
+    - Problem: <1-2 sentences>
+    - Solution: <1-2 sentences>
+
+Push to Confluence? [approve / edit / skip]
+```
+
+Never save locally without suggesting the push first.
+
+### How to Execute the Push (after user approves)
+
+**Resolve the target page ID** from `~/.claude/knowledge-pages.json`:
+- Team standard → `jq -r '._meta.shared_page_id'`
+- Dependency/cross-service → `jq -r '._meta.dependency_map_page_id'`
+- Module-specific → `jq -r --arg r "REPO" '.repos[$r].page_id'`
+
+**Run the push script:**
+```bash
+source ~/.config/confluence/.env
+export CONFLUENCE_USERNAME CONFLUENCE_API_TOKEN
+CONFIG_FILE=~/.claude/knowledge-pages.json PYTHON3=python3 \
+  source ~/.claude/repos/claude-team-memory/adapters/wikis/confluence/push.sh
+run_push "TITLE" "<ul><li><strong>Problem:</strong> ...</li><li><strong>Solution:</strong> ...</li></ul>" "cross-team"
+```
+
+The `scope` argument controls routing: `cross-team`, `atlas`, `domain:<name>`, or `repo:<name>`.
+
+**After push:** delete the local cache so the next pull is fresh:
+```bash
+rm -f ~/.claude/cache/wiki/shared.md ~/.claude/team_knowledge.md
+```
+
+## Team-Specific Context
+- Jira: ANALYTICS project on https://your-org.atlassian.net
+- Primary work: data pipeline development, workflow orchestration, query optimization
+- Works across 10+ repos
+
+## Team Standards (shared across all teammates)
+@~/.claude/rules/team-standards.md
+
+## Skill Routing (auto-generated from SKILL.md files — always up-to-date)
+@~/.claude/cache/skills_routing.md
+
+## Team Knowledge (auto-synced from your wiki — Confluence, Notion, or GitBook)
+@~/.claude/team_knowledge.md
+
+<!-- BEGIN PERSONAL — everything below this line is yours, never overwritten -->
+## Personal
+- Prefers terse responses, no trailing summaries
+- Deep SQL expertise, new to Python orchestration
+- Working hours: EST, usually 9am-6pm

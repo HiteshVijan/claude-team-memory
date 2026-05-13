@@ -1,0 +1,46 @@
+{
+  "_meta": {
+    "wiki_provider": "confluence",
+    "wiki_base_url": "https://your-org.atlassian.net",
+    "space_key": "TEAMSPACE",
+    "shared_page_id": "YOUR_SHARED_PAGE_ID",
+    "dependency_map_page_id": "YOUR_DEPMAP_PAGE_ID",
+    "domain_pages": {
+      "batch-processing": "YOUR_BATCH_DOMAIN_PAGE_ID",
+      "streaming": "YOUR_STREAMING_DOMAIN_PAGE_ID",
+      "agents": "YOUR_AGENTS_DOMAIN_PAGE_ID"
+    }
+  },
+  "repos": {
+    "data-intake": {
+      "page_id": "YOUR_DATA_INTAKE_PAGE_ID",
+      "domain": "ingestion",
+      "description": "Raw data intake pipelines"
+    },
+    "data-transform": {
+      "page_id": "YOUR_DATA_TRANSFORM_PAGE_ID",
+      "domain": "batch-processing",
+      "description": "Daily/weekly data transformation workflows"
+    },
+    "feature-engine": {
+      "page_id": "YOUR_FEATURE_ENGINE_PAGE_ID",
+      "domain": "batch-processing",
+      "description": "Feature computation and scoring"
+    },
+    "data-export": {
+      "page_id": "YOUR_DATA_EXPORT_PAGE_ID",
+      "domain": "batch-processing",
+      "description": "Downstream data delivery"
+    },
+    "event-processor": {
+      "page_id": "YOUR_EVENT_PROCESSOR_PAGE_ID",
+      "domain": "streaming",
+      "description": "Real-time event processing"
+    },
+    "analytics-agent": {
+      "page_id": "YOUR_ANALYTICS_AGENT_PAGE_ID",
+      "domain": "agents",
+      "description": "AI-powered data analysis agent"
+    }
+  }
+}

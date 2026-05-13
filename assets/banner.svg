@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="50%" style="stop-color:#1e293b"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.3"/>
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:0.3"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="300" rx="12" fill="url(#bg)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.05" stroke="#10b981" stroke-width="0.5">
+    <line x1="0" y1="50" x2="1200" y2="50"/>
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="150" x2="1200" y2="150"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="250" x2="1200" y2="250"/>
+    <line x1="200" y1="0" x2="200" y2="300"/>
+    <line x1="400" y1="0" x2="400" y2="300"/>
+    <line x1="600" y1="0" x2="600" y2="300"/>
+    <line x1="800" y1="0" x2="800" y2="300"/>
+    <line x1="1000" y1="0" x2="1000" y2="300"/>
+  </g>
+
+  <!-- Glow effect behind text -->
+  <ellipse cx="600" cy="120" rx="350" ry="80" fill="url(#glow)"/>
+
+  <!-- Brain/network icon -->
+  <g transform="translate(380, 55)" fill="none" stroke="url(#accent)" stroke-width="2.5" stroke-linecap="round">
+    <!-- Central node -->
+    <circle cx="30" cy="35" r="6" fill="#10b981" opacity="0.8"/>
+    <!-- Connected nodes -->
+    <circle cx="8" cy="15" r="4" fill="#8b5cf6" opacity="0.6"/>
+    <circle cx="52" cy="12" r="4" fill="#8b5cf6" opacity="0.6"/>
+    <circle cx="10" cy="58" r="4" fill="#8b5cf6" opacity="0.6"/>
+    <circle cx="55" cy="55" r="4" fill="#8b5cf6" opacity="0.6"/>
+    <circle cx="30" cy="5" r="3" fill="#10b981" opacity="0.5"/>
+    <circle cx="30" cy="65" r="3" fill="#10b981" opacity="0.5"/>
+    <!-- Connections -->
+    <line x1="30" y1="35" x2="8" y2="15" opacity="0.5"/>
+    <line x1="30" y1="35" x2="52" y2="12" opacity="0.5"/>
+    <line x1="30" y1="35" x2="10" y2="58" opacity="0.5"/>
+    <line x1="30" y1="35" x2="55" y2="55" opacity="0.5"/>
+    <line x1="30" y1="35" x2="30" y2="5" opacity="0.4"/>
+    <line x1="30" y1="35" x2="30" y2="65" opacity="0.4"/>
+    <line x1="8" y1="15" x2="30" y2="5" opacity="0.3"/>
+    <line x1="52" y1="12" x2="30" y2="5" opacity="0.3"/>
+    <line x1="10" y1="58" x2="30" y2="65" opacity="0.3"/>
+    <line x1="55" y1="55" x2="30" y2="65" opacity="0.3"/>
+  </g>
+
+  <!-- Title -->
+  <text x="430" y="105" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="42" font-weight="700" fill="white" letter-spacing="-0.5">
+    Context Memory
+  </text>
+
+  <!-- Subtitle -->
+  <text x="430" y="140" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="18" fill="#94a3b8" font-weight="400">
+    for Claude Code
+  </text>
+
+  <!-- Tagline -->
+  <text x="600" y="200" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="16" fill="#64748b" text-anchor="middle">
+    Persistent team knowledge that loads before you type a single character
+  </text>
+
+  <!-- Bottom accent line -->
+  <rect x="100" y="240" width="1000" height="2" rx="1" fill="url(#accent)" opacity="0.3"/>
+
+  <!-- Feature pills -->
+  <g font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="500">
+    <rect x="280" y="255" width="120" height="26" rx="13" fill="#10b981" opacity="0.15"/>
+    <text x="340" y="272" fill="#10b981" text-anchor="middle">Team-Shared</text>
+
+    <rect x="420" y="255" width="120" height="26" rx="13" fill="#8b5cf6" opacity="0.15"/>
+    <text x="480" y="272" fill="#8b5cf6" text-anchor="middle">Bidirectional</text>
+
+    <rect x="560" y="255" width="100" height="26" rx="13" fill="#f59e0b" opacity="0.15"/>
+    <text x="610" y="272" fill="#f59e0b" text-anchor="middle">4-Tier Arch</text>
+
+    <rect x="680" y="255" width="110" height="26" rx="13" fill="#06b6d4" opacity="0.15"/>
+    <text x="735" y="272" fill="#06b6d4" text-anchor="middle">Auto-Synced</text>
+
+    <rect x="810" y="255" width="100" height="26" rx="13" fill="#ec4899" opacity="0.15"/>
+    <text x="860" y="272" fill="#ec4899" text-anchor="middle">No MCP</text>
+  </g>
+</svg>
